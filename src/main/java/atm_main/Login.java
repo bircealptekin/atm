@@ -9,11 +9,6 @@ import utils.DbConnection;
 
 public class Login {
 	
-	public Connection dbConnection() {
-		DbConnection dbConnection = new DbConnection();
-		return dbConnection.getConnection();
-	}
-	
 	public void checkLogin() {
 		System.out.println("-------- LOGIN --------");
 	
