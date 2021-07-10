@@ -20,8 +20,8 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		CustomerDto customerDto; //declaration of variable writerDto
 		ArrayList<CustomerDto> customers = new ArrayList<CustomerDto>();
 		String sql = "SELECT * FROM customers";
-		try (Connection connection = DbConnection.getConnection()) {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		try {
+			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
 			this.resultSet = preparedStatement.executeQuery();
 			System.out.println("Customers list.");
 			while(resultSet.next()) {
