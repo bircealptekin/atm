@@ -5,6 +5,7 @@ public class CustomerDto {
 	// declare the variables
 	private String name;
 	private String surname;
+	private String username;
 	private String password;
 	private int balance;
 	
@@ -21,6 +22,12 @@ public class CustomerDto {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -35,23 +42,20 @@ public class CustomerDto {
 	}
 	
 	// constructor without parameters
-	public CustomerDto( ) {
+	public CustomerDto() {
 		
 	}
 	
-	// constructor with parameters
-	public CustomerDto(String name, String surname, String password, int balance) {
+	// constructor with parameter
+	public CustomerDto(String name, String surname, String username, String password, int balance) {
 		super();
 		this.name = name;
 		this.surname = surname;
+		this.username = username;
 		this.password = password;
 		this.balance = balance;
 	}
-	@Override
-	public String toString() {
-		return "[name=" + name + ", surname=" + surname + ", password=" + password + ", balance=" + balance
-				+ "]\n";
-	}
+	
 	
 	
 	

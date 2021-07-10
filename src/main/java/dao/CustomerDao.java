@@ -27,6 +27,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 				customerDto = new CustomerDto();
 				customerDto.setName(resultSet.getString("name"));
 				customerDto.setSurname(resultSet.getString("surname"));
+				customerDto.setUsername(resultSet.getString("username"));
 				customerDto.setPassword(resultSet.getString("password"));
 				customerDto.setBalance(resultSet.getInt("balance"));
 				customers.add(customerDto);
