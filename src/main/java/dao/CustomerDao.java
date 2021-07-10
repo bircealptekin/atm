@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.CustomerDto;
+import utils.DbConnection;
 import utils.IDaoImplements;
 
 public class CustomerDao implements IDaoImplements<CustomerDto> {
@@ -19,7 +20,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		CustomerDto customerDto; //declaration of variable writerDto
 		ArrayList<CustomerDto> customers = new ArrayList<CustomerDto>();
 		String sql = "SELECT * FROM customers";
-		try (Connection connection = dbConnection()) {
+		try (Connection connection = DbConnection.getConnection()) {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			this.resultSet = preparedStatement.executeQuery();
 			System.out.println("Customers list.");

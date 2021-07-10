@@ -10,8 +10,4 @@ public interface IDaoImplements<T> {
 	boolean delete(T t) throws SQLException;
 	ArrayList<T> list();
 	
-	default Connection dbConnection() {
-		DbConnection dbConnection = new DbConnection();
-		return dbConnection.getConnection();
-	}
 }

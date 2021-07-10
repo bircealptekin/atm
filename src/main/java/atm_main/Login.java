@@ -20,8 +20,8 @@ public class Login {
 		System.out.println("Please enter your password: ");
 		passwordLogin = input.nextLine();
 		
-		try (Connection connection = dbConnection()) {
-			PreparedStatement statement = (PreparedStatement) connection.prepareStatement("SELECT username, password FROM customers WHERE username=? AND password=?");
+		try {
+			PreparedStatement statement = (PreparedStatement) DbConnection.getConnection().prepareStatement("SELECT username, password FROM customers WHERE username=? AND password=?");
 			statement.setString(1, usernameLogin);
             statement.setString(2, passwordLogin);
             ResultSet resultSet = statement.executeQuery();
@@ -29,7 +29,7 @@ public class Login {
             	System.out.println("Login successful.");
             }
             else {
-            	  System.out.println("Invalid user credentials");
+            	  System.out.println("Invalid user credentials.");
               }
 			
         } catch (Exception e) {
