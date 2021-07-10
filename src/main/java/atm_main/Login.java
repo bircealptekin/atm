@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Scanner;
 
+import utils.ClearConsole;
 import utils.DbConnection;
 
 public class Login {
@@ -25,8 +26,10 @@ public class Login {
 			statement.setString(1, usernameLogin);
             statement.setString(2, passwordLogin);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()) { // Until next row is present otherwise it return false
+            if(resultSet.next()) {
             	System.out.println("Login successful.");
+            	ClearConsole.clearConsole();
+            	//loginSuccess();
             }
             else {
             	  System.out.println("Invalid user credentials.");
@@ -34,6 +37,39 @@ public class Login {
 			
         } catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void loginSuccess() {
+		while (true) {
+			Scanner input = new Scanner(System.in);
+			System.out.println("lütfen seçim yapýnýz");
+			System.out.println("1)Deposit\n2)Withdrawal\n3)Transfer\n4)Exit");
+			int choice;
+			choice = input.nextInt();
+
+			switch (choice) {
+				case 1:
+					System.out.println("**********************************");
+					
+					break;
+				case 2:
+					System.out.println("**********************************");
+					
+					break;
+				case 3:
+					System.out.println("**********************************");
+					
+					break;
+				case 4:
+					System.out.println("Exiting...");
+					System.exit(0);
+					break;
+
+				default:
+					System.out.println("Please make a choice.");
+					break;
+			}
 		}
 	}
 }

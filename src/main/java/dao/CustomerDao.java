@@ -49,14 +49,14 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 
 
 	@Override
-	public boolean update(CustomerDto writerDto) throws SQLException {
+	public boolean update(CustomerDto customerDto) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 
 	@Override
-	public boolean delete(CustomerDto writerDto) throws SQLException {
+	public boolean delete(CustomerDto customerDto) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}
