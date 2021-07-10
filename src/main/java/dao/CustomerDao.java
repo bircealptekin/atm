@@ -18,7 +18,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 	public ArrayList<CustomerDto> list() {
 		CustomerDto customerDto; //declaration of variable writerDto
 		ArrayList<CustomerDto> customers = new ArrayList<CustomerDto>();
-		String sql = "SELECT * FROM customer";
+		String sql = "SELECT * FROM customers";
 		try (Connection connection = dbConnection()) {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			this.resultSet = preparedStatement.executeQuery();

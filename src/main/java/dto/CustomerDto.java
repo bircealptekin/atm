@@ -56,7 +56,12 @@ public class CustomerDto {
 		this.balance = balance;
 	}
 	
-	
+	// to string
+	@Override
+	public String toString() {
+		return "CustomerDto [name=" + name + ", surname=" + surname + ", username=" + username + ", password="
+				+ password + ", balance=" + balance + "]\n";
+	}
 	
 	
 
