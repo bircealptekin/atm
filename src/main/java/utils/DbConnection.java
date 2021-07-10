@@ -6,14 +6,14 @@ import java.sql.SQLException;
 
 public class DbConnection {
 
-	private String user = "root";
-	private String password = "12345";
-	private String url = "jdbc:mysql://localhost:3306/atm";
-	private Connection connection;
+	private static final String user = "root";
+	private static final String password = "12345";
+	private static final String url = "jdbc:mysql://localhost:3306/atm";
+	private static Connection connection;
 
-	public Connection getConnection() {
+	public static Connection getConnection() {
 		try {
-			if (this.connection == null || connection.isClosed()) {
+			if (connection == null || connection.isClosed()) {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 				System.out.println("Driver OK.");
 				connection = DriverManager.getConnection(url, user, password);
