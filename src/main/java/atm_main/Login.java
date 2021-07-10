@@ -35,8 +35,8 @@ public class Login {
 		
 		try (Connection connection = dbConnection()) {
 			PreparedStatement statement = (PreparedStatement) connection.prepareStatement("SELECT username, password FROM customers WHERE username=? AND password=?");
-			statement.setString(1, usernameLogin);
-            statement.setString(2, passwordLogin);
+			statement.setString(1, username);
+            statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) // Until next row is present otherwise it return false
             {
