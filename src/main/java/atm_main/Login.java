@@ -9,23 +9,18 @@ import utils.DbConnection;
 
 public class Login {
 	
-	public static void main(String[] args) {
-		
-		System.out.println("-------- LOGIN --------");
-		
-	}
-	
 	public Connection dbConnection() {
 		DbConnection dbConnection = new DbConnection();
 		return dbConnection.getConnection();
 	}
 	
 	public void checkLogin() {
+		System.out.println("-------- LOGIN --------");
 	
 		Scanner input = new Scanner(System.in);
 		String usernameLogin, passwordLogin;
 		
-		System.out.println("Please enter your password: ");
+		System.out.println("Please enter your username: ");
 		usernameLogin = input.nextLine();
 		System.out.println("Please enter your password: ");
 		passwordLogin = input.nextLine();
