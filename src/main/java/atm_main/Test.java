@@ -18,8 +18,8 @@ public class Test {
 		
 		DbConnection.getConnection();
 	
-		CustomerDao customerDao = new CustomerDao();
-		BankDao bankDao = new BankDao();
+		//CustomerDao customerDao = new CustomerDao();
+		//BankDao bankDao = new BankDao();
 		
 		CustomerDto currentCustomer;
 		BankDto currentBank;

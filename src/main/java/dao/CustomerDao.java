@@ -67,5 +67,12 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
+	@Override
+	public boolean getBalance(CustomerDto t) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

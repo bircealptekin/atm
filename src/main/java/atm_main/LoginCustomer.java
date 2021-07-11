@@ -40,7 +40,6 @@ public class LoginCustomer {
             }
             else {
             	currentCustomer = null;
-            	 // System.out.println("Invalid user credentials.");
               }
 			
         } catch (Exception e) {

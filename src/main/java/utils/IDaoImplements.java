@@ -9,6 +9,7 @@ public interface IDaoImplements<T> {
 	boolean withdraw(T t) throws SQLException;
 	boolean deposit(T t) throws SQLException;
 	boolean delete(T t) throws SQLException;
+	boolean getBalance(T t) throws SQLException;
 	ArrayList<T> list();
 	
 }
