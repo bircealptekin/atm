@@ -4,14 +4,15 @@ import dao.BankDao;
 import dao.CustomerDao;
 import dto.BankDto;
 import dto.CustomerDto;
+import login.LoginBank;
+import login.LoginCustomer;
+import screens.BankScreen;
 import screens.CustomerScreen;
 import utils.DbConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
-
-import atm_main.LoginCustomer;
 
 public class Test {
 
@@ -39,6 +40,12 @@ public class Test {
 		if(choice == 1) {
 			LoginBank loginBank = new LoginBank();
 			currentBank = loginBank.checkLoginBank();
+			if (currentBank != null) {
+				BankScreen bankScreen = new BankScreen(currentBank);
+				bankScreen.BankDisplay();
+			}
+			else
+				System.out.println("Invalid user credentials.");
 
 		}
 		else if(choice == 2) {

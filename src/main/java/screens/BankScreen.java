@@ -1,21 +1,33 @@
 package screens;
 
+import java.sql.SQLException;
 import java.util.Scanner;
+
+import dao.BankDao;
+import dto.BankDto;
 
 public class BankScreen {
 	
-	public void loginSuccessBank() {
-		while (true) {
+	BankDao bankDao = new BankDao();
+	BankDto currentBank;
+	
+	public BankScreen(BankDto currentBank) {
+		super();
+		this.currentBank = currentBank;
+	}
+
+	public void BankDisplay() throws SQLException {
+		int choice = 0;
+		while (choice != 5) {
 			Scanner input = new Scanner(System.in);
 			System.out.println("Please make a choice.");
-			System.out.println("1)Deposit\n2)Withdrawal\n3)Transfer\n4)Exit");
-			int choice;
+			System.out.println("1)Check Balance\n2)Deposit\n3)Withdrawal\n4)Transfer\n5)Exit");
 			choice = input.nextInt();
 
 			switch (choice) {
 				case 1:
 					System.out.println("**********************************");
-					
+					System.out.println(bankDao.getBalance(currentBank));
 					break;
 				case 2:
 					System.out.println("**********************************");
@@ -26,8 +38,12 @@ public class BankScreen {
 					
 					break;
 				case 4:
+					System.out.println("**********************************");
+					
+					break;
+				case 5:
 					System.out.println("Exiting...");
-					System.exit(0);
+					
 					break;
 
 				default:
@@ -36,5 +52,5 @@ public class BankScreen {
 			}
 		}
 	}
-
+	
 }

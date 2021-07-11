@@ -1,10 +1,12 @@
 package dao;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import dto.CustomerDto;
 import utils.DbConnection;
@@ -13,7 +15,7 @@ import utils.IDaoImplements;
 public class CustomerDao implements IDaoImplements<CustomerDto> {
 	ResultSet resultSet;
 	//private CustomerDto customerDto;
-
+	Scanner input = new Scanner(System.in);
 	
 	@Override
 	public ArrayList<CustomerDto> list() {
@@ -56,9 +58,22 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 	}
 	
 	@Override
-	public boolean deposit(CustomerDto customerDto) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public void deposit(CustomerDto currentCustomer) throws SQLException {
+		int customerBalance = 0, depositAmount = 0;
+		String sql = "SELECT balance FROM customers WHERE id = ?";
+		System.out.println("Please enter the amount of money you want to deposit: ");
+		depositAmount = input.nextInt();
+		try {
+			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
+			preparedStatement.setInt(1, currentCustomer.getId());
+			this.resultSet = preparedStatement.executeQuery();
+			System.out.println("Your balance: ");
+			if(resultSet.next()) {
+				customerBalance = currentCustomer.getBalance();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -71,7 +86,6 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 
 	@Override
 	public int getBalance(CustomerDto currentCustomer) throws SQLException {
-		//CustomerDto customerDto; //declaration of variable customerDto
 		int customerBalance = 0;
 		String sql = "SELECT balance FROM customers WHERE id = ?";
 		try {

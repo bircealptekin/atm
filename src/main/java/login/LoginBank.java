@@ -1,4 +1,4 @@
-package atm_main;
+package login;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +25,7 @@ public class LoginBank {
 		passwordLogin = input.nextLine();
 		
 		try {
-			PreparedStatement statement = (PreparedStatement) DbConnection.getConnection().prepareStatement("SELECT b_username, password FROM bank WHERE b_username=? AND password=?");
+			PreparedStatement statement = (PreparedStatement) DbConnection.getConnection().prepareStatement("SELECT * FROM bank WHERE b_username=? AND password=?");
 			statement.setString(1, b_usernameLogin);
             statement.setString(2, passwordLogin);
             ResultSet resultSet = statement.executeQuery();
@@ -38,7 +38,7 @@ public class LoginBank {
             	currentBank.setBalance(resultSet.getInt("balance"));
             }
             else {
-            	  System.out.println("Invalid user credentials.");
+            	currentBank = null;
               }
 			
         } catch (Exception e) {

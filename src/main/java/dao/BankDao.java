@@ -62,4 +62,23 @@ public class BankDao implements IDaoImplements<BankDto> {
 		return bankList;
 	}
 
+	@Override
+	public int getBalance(BankDto currentBank) throws SQLException {
+		int bankBalance = 0;
+		String sql = "SELECT balance FROM bank WHERE id = ?";
+		try {
+			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
+			preparedStatement.setInt(1, currentBank.getId());
+			this.resultSet = preparedStatement.executeQuery();
+			System.out.println("Your balance: ");
+			if(resultSet.next()) {
+				bankBalance = currentBank.getBalance();
+			}
+			return bankBalance;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return bankBalance;
+	}
+
 }
