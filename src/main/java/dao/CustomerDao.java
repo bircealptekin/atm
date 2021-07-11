@@ -52,29 +52,41 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 
 
 	@Override
-	public boolean withdraw(CustomerDto customerDto) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public void withdraw(CustomerDto currentCustomer) throws SQLException {
+		int withdrawAmount = 0, newCustomerBalance = 0;
+		System.out.println("Please enter the amount of money you want to deposit: ");
+		withdrawAmount = input.nextInt();
+		while (withdrawAmount > getBalance(currentCustomer)) {
+			System.out.println("Not enough balance. Your balance is: " + getBalance(currentCustomer));
+			System.out.println("Pleas specify another amount: ");
+			withdrawAmount = input.nextInt();
+		}
+		
+		newCustomerBalance = getBalance(currentCustomer) - withdrawAmount;
+		update(currentCustomer, newCustomerBalance);
+		
 	}
 	
 	@Override
 	public void deposit(CustomerDto currentCustomer) throws SQLException {
 		int depositAmount = 0, newCustomerBalance = 0;
-		String sql1 = "SELECT balance FROM customers WHERE id = ?";
 		System.out.println("Please enter the amount of money you want to deposit: ");
 		depositAmount = input.nextInt();
 		
 		newCustomerBalance = getBalance(currentCustomer) + depositAmount;
-		
-		String sql2 = "UPDATE customers SET balance = ? WHERE id = ?";
+		update(currentCustomer, newCustomerBalance);
+	}
+	
+	public void update(CustomerDto currentCustomer, int newCustomerBalance) throws SQLException {
+		String sql = "UPDATE customers SET balance = ? WHERE id = ?";
 		int isBalanceUpdated = 0;
 		try {
-			PreparedStatement preparedStatement2 = DbConnection.getConnection().prepareStatement(sql2);
+			PreparedStatement preparedStatement2 = DbConnection.getConnection().prepareStatement(sql);
 			preparedStatement2.setInt(1, newCustomerBalance);
 			preparedStatement2.setInt(2, currentCustomer.getId());
 			isBalanceUpdated = preparedStatement2.executeUpdate();
 			if(isBalanceUpdated > 0) {
-				System.out.println("Deposit was successful.");
+				System.out.println("Operation successful.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

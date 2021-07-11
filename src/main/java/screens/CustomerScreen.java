@@ -35,7 +35,7 @@ public class CustomerScreen {
 					break;
 				case 3:
 					System.out.println("**********************************");
-					
+					customerDao.withdraw(currentCustomer);
 					break;
 				case 4:
 					System.out.println("**********************************");
