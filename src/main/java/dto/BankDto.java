@@ -3,12 +3,19 @@ package dto;
 public class BankDto {
 	
 	// declare the variables
+	private int id;
 	private String bank_name;
 	private String b_username;
 	private String password;
 	private int balance;
 	
 	// getters and setters
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getBank_name() {
 		return bank_name;
 	}

@@ -4,11 +4,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Scanner;
 
+import dto.BankDto;
+import dto.CustomerDto;
 import utils.DbConnection;
 
 public class LoginBank {
 	
-	public void checkLoginBank() {
+	public BankDto checkLoginBank() {
+		BankDto currentBank;
+    	currentBank = new BankDto();
 		
 		System.out.println("-------- BANK LOGIN --------");
 		
@@ -27,7 +31,11 @@ public class LoginBank {
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {
             	System.out.println("Login successful.");
-            	loginSuccess();
+            	currentBank.setId(resultSet.getInt("id"));
+            	currentBank.setBank_name(resultSet.getString("bank_name"));
+            	currentBank.setB_username(resultSet.getString("b_username"));
+            	currentBank.setPassword(resultSet.getString("password"));
+            	currentBank.setBalance(resultSet.getInt("balance"));
             }
             else {
             	  System.out.println("Invalid user credentials.");
@@ -36,40 +44,7 @@ public class LoginBank {
         } catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-	}
-	
-	public void loginSuccess() {
-		while (true) {
-			Scanner input = new Scanner(System.in);
-			System.out.println("Please make a choice.");
-			System.out.println("1)Deposit\n2)Withdrawal\n3)Transfer\n4)Exit");
-			int choice;
-			choice = input.nextInt();
-
-			switch (choice) {
-				case 1:
-					System.out.println("**********************************");
-					
-					break;
-				case 2:
-					System.out.println("**********************************");
-					
-					break;
-				case 3:
-					System.out.println("**********************************");
-					
-					break;
-				case 4:
-					System.out.println("Exiting...");
-					System.exit(0);
-					break;
-
-				default:
-					System.out.println("Please make a choice.");
-					break;
-			}
-		}
+		return currentBank;
 	}
 
 }

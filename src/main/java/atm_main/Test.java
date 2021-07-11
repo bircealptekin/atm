@@ -2,6 +2,7 @@ package atm_main;
 
 import dao.BankDao;
 import dao.CustomerDao;
+import dto.BankDto;
 import dto.CustomerDto;
 import utils.DbConnection;
 
@@ -17,8 +18,10 @@ public class Test {
 		DbConnection.getConnection();
 	
 		CustomerDao customerDao = new CustomerDao();
-		CustomerDto currentCustomer = new CustomerDto();
 		BankDao bankDao = new BankDao();
+		
+		CustomerDto currentCustomer;
+		BankDto currentBank;
 		
 		//System.out.println(customerDao.list());
 		
@@ -29,7 +32,7 @@ public class Test {
 		int choice;
 		System.out.println("-------- WELCOME --------");
 		System.out.println("Please make a choice:");
-		System.out.println("1. Bank Login\n2.Customer Login");
+		System.out.println("1. Bank Login\n2. Customer Login");
 		choice = input.nextInt();
 		if(choice == 1) {
 			LoginBank loginBank = new LoginBank();

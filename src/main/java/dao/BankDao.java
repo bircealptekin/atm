@@ -48,6 +48,7 @@ public class BankDao implements IDaoImplements<BankDto> {
 			System.out.println("Banks list:");
 			while(resultSet.next()) {
 				bankDto = new BankDto();
+				bankDto.setId(resultSet.getInt("id"));
 				bankDto.setBank_name(resultSet.getString("bank_name"));
 				bankDto.setB_username(resultSet.getString("b_username"));
 				bankDto.setPassword(resultSet.getString("password"));
