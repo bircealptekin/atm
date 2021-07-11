@@ -28,7 +28,6 @@ public class Test {
 		
 		//System.out.println(bankDao.list());
 		
-		
 		Scanner input = new Scanner(System.in);
 		int choice;
 		System.out.println("-------- WELCOME --------");
@@ -43,7 +42,7 @@ public class Test {
 		else if(choice ==2) {
 			LoginCustomer loginCustomer = new LoginCustomer();
 			currentCustomer = loginCustomer.checkLoginCustomer();
-			CustomerScreen customerScreen = new CustomerScreen();
+			CustomerScreen customerScreen = new CustomerScreen(currentCustomer);
 			customerScreen.CustomerDisplay();
 		}
 

@@ -2,8 +2,16 @@ package screens;
 
 import java.util.Scanner;
 
+import dto.CustomerDto;
+
 public class CustomerScreen {
+	CustomerDto currentCustomer;
 	
+	public CustomerScreen(CustomerDto currentCustomer) {
+		super();
+		this.currentCustomer = currentCustomer;
+	}
+
 	public void CustomerDisplay() {
 		while (true) {
 			Scanner input = new Scanner(System.in);
