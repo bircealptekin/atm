@@ -1,35 +1,33 @@
 package atm_main;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Scanner;
 
-import utils.ClearConsole;
 import utils.DbConnection;
 
-public class Login {
+public class LoginBank {
 	
-	public void checkLogin() {
-		System.out.println("-------- LOGIN --------");
-	
+	public void checkLoginBank() {
+		
+		System.out.println("-------- BANK LOGIN --------");
+		
 		Scanner input = new Scanner(System.in);
-		String usernameLogin, passwordLogin;
+		String b_usernameLogin, passwordLogin;
 		
 		System.out.println("Please enter your username: ");
-		usernameLogin = input.nextLine();
+		b_usernameLogin = input.nextLine();
 		System.out.println("Please enter your password: ");
 		passwordLogin = input.nextLine();
 		
 		try {
-			PreparedStatement statement = (PreparedStatement) DbConnection.getConnection().prepareStatement("SELECT username, password FROM customers WHERE username=? AND password=?");
-			statement.setString(1, usernameLogin);
+			PreparedStatement statement = (PreparedStatement) DbConnection.getConnection().prepareStatement("SELECT b_username, password FROM bank WHERE b_username=? AND password=?");
+			statement.setString(1, b_usernameLogin);
             statement.setString(2, passwordLogin);
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {
             	System.out.println("Login successful.");
-            	ClearConsole.clearConsole();
-            	//loginSuccess();
+            	loginSuccess();
             }
             else {
             	  System.out.println("Invalid user credentials.");
@@ -38,12 +36,13 @@ public class Login {
         } catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public void loginSuccess() {
 		while (true) {
 			Scanner input = new Scanner(System.in);
-			System.out.println("lütfen seçim yapýnýz");
+			System.out.println("Please make a choice.");
 			System.out.println("1)Deposit\n2)Withdrawal\n3)Transfer\n4)Exit");
 			int choice;
 			choice = input.nextInt();
@@ -72,4 +71,5 @@ public class Login {
 			}
 		}
 	}
+
 }

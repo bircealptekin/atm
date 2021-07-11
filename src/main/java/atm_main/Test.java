@@ -4,8 +4,9 @@ import dao.CustomerDao;
 import utils.DbConnection;
 
 import java.sql.Connection;
+import java.util.Scanner;
 
-import atm_main.Login;
+import atm_main.LoginCustomer;
 
 public class Test {
 
@@ -17,8 +18,21 @@ public class Test {
 		
 		//System.out.println(customerDao.list());
 		
-		Login login = new Login();
-		login.checkLogin();
+		Scanner input = new Scanner(System.in);
+		int choice;
+		System.out.println("-------- WELCOME --------");
+		System.out.println("Please make a choice:");
+		System.out.println("1. Bank Login\n2.Customer Login");
+		choice = input.nextInt();
+		if(choice == 1) {
+			LoginBank loginBank = new LoginBank();
+			loginBank.checkLoginBank();
+
+		}
+		else if(choice ==2) {
+			LoginCustomer loginCustomer = new LoginCustomer();
+			loginCustomer.checkLoginCustomer();
+		}
 
 	}
 
