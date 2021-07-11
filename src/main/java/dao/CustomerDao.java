@@ -59,17 +59,32 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 	
 	@Override
 	public void deposit(CustomerDto currentCustomer) throws SQLException {
-		int customerBalance = 0, depositAmount = 0;
-		String sql = "SELECT balance FROM customers WHERE id = ?";
+		int customerBalance = 0, depositAmount = 0, newCustomerBalance = 0;
+		String sql1 = "SELECT balance FROM customers WHERE id = ?";
 		System.out.println("Please enter the amount of money you want to deposit: ");
 		depositAmount = input.nextInt();
 		try {
-			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
-			preparedStatement.setInt(1, currentCustomer.getId());
-			this.resultSet = preparedStatement.executeQuery();
-			System.out.println("Your balance: ");
+			PreparedStatement preparedStatement1 = DbConnection.getConnection().prepareStatement(sql1);
+			preparedStatement1.setInt(1, currentCustomer.getId());
+			this.resultSet = preparedStatement1.executeQuery();
 			if(resultSet.next()) {
 				customerBalance = currentCustomer.getBalance();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		newCustomerBalance = customerBalance + depositAmount;
+		
+		String sql2 = "UPDATE customers SET balance = ? WHERE id = ?";
+		int isBalanceUpdated = 0;
+		try {
+			PreparedStatement preparedStatement2 = DbConnection.getConnection().prepareStatement(sql2);
+			preparedStatement2.setInt(1, newCustomerBalance);
+			preparedStatement2.setInt(2, currentCustomer.getId());
+			isBalanceUpdated = preparedStatement2.executeUpdate();
+			if(isBalanceUpdated > 0) {
+				System.out.println("Deposit successful.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

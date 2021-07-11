@@ -26,9 +26,8 @@ public class BankDao implements IDaoImplements<BankDto> {
 	}
 
 	@Override
-	public boolean deposit(BankDto bankDto) throws SQLException {
+	public void deposit(BankDto bankDto) throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

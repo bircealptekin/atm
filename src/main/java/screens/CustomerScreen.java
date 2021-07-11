@@ -30,7 +30,7 @@ public class CustomerScreen {
 					break;
 				case 2:
 					System.out.println("**********************************");
-					
+					customerDao.deposit(currentCustomer);
 					break;
 				case 3:
 					System.out.println("**********************************");
