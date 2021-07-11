@@ -25,7 +25,7 @@ public class LoginCustomer {
 		passwordLogin = input.nextLine();
 		
 		try {
-			PreparedStatement statement = (PreparedStatement) DbConnection.getConnection().prepareStatement("SELECT username, password FROM customers WHERE username=? AND password=?");
+			PreparedStatement statement = (PreparedStatement) DbConnection.getConnection().prepareStatement("SELECT * FROM customers WHERE username=? AND password=?");
 			statement.setString(1, usernameLogin);
             statement.setString(2, passwordLogin);
             ResultSet resultSet = statement.executeQuery();
@@ -39,7 +39,8 @@ public class LoginCustomer {
             	currentCustomer.setBalance(resultSet.getInt("balance"));
             }
             else {
-            	  System.out.println("Invalid user credentials.");
+            	currentCustomer = null;
+            	 // System.out.println("Invalid user credentials.");
               }
 			
         } catch (Exception e) {

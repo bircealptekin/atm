@@ -42,8 +42,12 @@ public class Test {
 		else if(choice ==2) {
 			LoginCustomer loginCustomer = new LoginCustomer();
 			currentCustomer = loginCustomer.checkLoginCustomer();
-			CustomerScreen customerScreen = new CustomerScreen(currentCustomer);
-			customerScreen.CustomerDisplay();
+			if (currentCustomer != null) {
+				CustomerScreen customerScreen = new CustomerScreen(currentCustomer);
+				customerScreen.CustomerDisplay();
+			}
+			else
+				System.out.println("Invalid user credentials.");
 		}
 
 	}
