@@ -84,7 +84,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			preparedStatement2.setInt(2, currentCustomer.getId());
 			isBalanceUpdated = preparedStatement2.executeUpdate();
 			if(isBalanceUpdated > 0) {
-				System.out.println("Deposit successful.");
+				System.out.println("Deposit was successful.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
