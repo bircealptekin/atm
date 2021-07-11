@@ -70,9 +70,24 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 
 
 	@Override
-	public boolean getBalance(CustomerDto t) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public int getBalance(CustomerDto currentCustomer) throws SQLException {
+		//CustomerDto customerDto; //declaration of variable customerDto
+		int customerBalance;
+		String sql = "SELECT balance FROM customers WHERE id = ?";
+		try {
+			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
+			preparedStatement.setInt(1, currentCustomer.setId(resultSet.getInt("id")));
+			this.resultSet = preparedStatement.executeQuery();
+			System.out.println("Your balance: ");
+			while(resultSet.next()) {
+				currentCustomer.setBalance(resultSet.getInt("balance"));
+				customerList.add(customerDto);
+			}
+			return customerBalance;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return customerBalance;
 	}
 	
 }
