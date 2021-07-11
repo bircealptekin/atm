@@ -26,6 +26,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			System.out.println("Customers list.");
 			while(resultSet.next()) {
 				customerDto = new CustomerDto();
+				customerDto.setId(resultSet.getInt("id"));
 				customerDto.setName(resultSet.getString("name"));
 				customerDto.setSurname(resultSet.getString("surname"));
 				customerDto.setUsername(resultSet.getString("username"));

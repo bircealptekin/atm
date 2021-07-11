@@ -3,6 +3,7 @@ package dto;
 public class CustomerDto {
 	
 	// declare the variables
+	private int id;
 	private String name;
 	private String surname;
 	private String username;
@@ -10,6 +11,12 @@ public class CustomerDto {
 	private int balance;
 	
 	// getters and setters
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}
@@ -47,22 +54,21 @@ public class CustomerDto {
 	}
 	
 	// constructor with parameter
-	public CustomerDto(String name, String surname, String username, String password, int balance) {
+	public CustomerDto(int id, String name, String surname, String username, String password, int balance) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.username = username;
 		this.password = password;
 		this.balance = balance;
 	}
-	
+
 	// to string
 	@Override
 	public String toString() {
-		return "CustomerDto [name=" + name + ", surname=" + surname + ", username=" + username + ", password="
-				+ password + ", balance=" + balance + "]\n";
+		return "CustomerDto [id=" + id + ", name=" + name + ", surname=" + surname + ", username=" + username
+				+ ", password=" + password + ", balance=" + balance + "]";
 	}
 	
-	
-
 }

@@ -2,6 +2,7 @@ package atm_main;
 
 import dao.BankDao;
 import dao.CustomerDao;
+import dto.CustomerDto;
 import utils.DbConnection;
 
 import java.sql.Connection;
@@ -16,6 +17,7 @@ public class Test {
 		DbConnection.getConnection();
 	
 		CustomerDao customerDao = new CustomerDao();
+		CustomerDto currentCustomer = new CustomerDto();
 		BankDao bankDao = new BankDao();
 		
 		//System.out.println(customerDao.list());

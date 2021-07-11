@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.Scanner;
 
 import dao.CustomerDao;
+import dto.CustomerDto;
 import utils.DbConnection;
 
 public class LoginCustomer {
@@ -21,12 +22,20 @@ public class LoginCustomer {
 		passwordLogin = input.nextLine();
 		
 		try {
+			CustomerDto currentCustomer;
+        	currentCustomer = new CustomerDto();
 			PreparedStatement statement = (PreparedStatement) DbConnection.getConnection().prepareStatement("SELECT username, password FROM customers WHERE username=? AND password=?");
 			statement.setString(1, usernameLogin);
             statement.setString(2, passwordLogin);
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {
             	System.out.println("Login successful.");
+            	currentCustomer.setId(resultSet.getInt("id"));
+            	currentCustomer.setName(resultSet.getString("name"));
+            	currentCustomer.setSurname(resultSet.getString("surname"));
+            	currentCustomer.setUsername(resultSet.getString("username"));
+            	currentCustomer.setPassword(resultSet.getString("password"));
+            	currentCustomer.setBalance(resultSet.getInt("balance"));
             	loginSuccess();
             }
             else {
@@ -49,7 +58,7 @@ public class LoginCustomer {
 			switch (choice) {
 				case 1:
 					System.out.println("**********************************");
-					//CustomerDao.deposit(CustomerDto);
+					
 					break;
 				case 2:
 					System.out.println("**********************************");
