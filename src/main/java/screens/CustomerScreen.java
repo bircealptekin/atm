@@ -26,6 +26,7 @@ public class CustomerScreen {
 			switch (choice) {
 				case 1:
 					System.out.println("**********************************");
+					System.out.println("Your balance: ");
 					System.out.println(customerDao.getBalance(currentCustomer));
 					break;
 				case 2:
