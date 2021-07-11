@@ -47,6 +47,13 @@ public class BankDto {
 		this.password = password;
 		this.balance = balance;
 	}
+	@Override
+	public String toString() {
+		return "BankDto [bank_name=" + bank_name + ", b_username=" + b_username + ", password=" + password
+				+ ", balance=" + balance + "]\n";
+	}
+	
+	
 	
 	
 }

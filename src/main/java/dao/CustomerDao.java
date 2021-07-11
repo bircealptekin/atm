@@ -18,7 +18,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 	@Override
 	public ArrayList<CustomerDto> list() {
 		CustomerDto customerDto; //declaration of variable writerDto
-		ArrayList<CustomerDto> customers = new ArrayList<CustomerDto>();
+		ArrayList<CustomerDto> customerList = new ArrayList<CustomerDto>();
 		String sql = "SELECT * FROM customers";
 		try {
 			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
@@ -31,13 +31,13 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 				customerDto.setUsername(resultSet.getString("username"));
 				customerDto.setPassword(resultSet.getString("password"));
 				customerDto.setBalance(resultSet.getInt("balance"));
-				customers.add(customerDto);
+				customerList.add(customerDto);
 			}
-			return customers;
+			return customerList;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return customers;
+		return customerList;
 	}
 
 

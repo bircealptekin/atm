@@ -1,5 +1,6 @@
 package atm_main;
 
+import dao.BankDao;
 import dao.CustomerDao;
 import utils.DbConnection;
 
@@ -15,8 +16,12 @@ public class Test {
 		DbConnection.getConnection();
 	
 		CustomerDao customerDao = new CustomerDao();
+		BankDao bankDao = new BankDao();
 		
 		//System.out.println(customerDao.list());
+		
+		//System.out.println(bankDao.list());
+		
 		
 		Scanner input = new Scanner(System.in);
 		int choice;
@@ -33,6 +38,7 @@ public class Test {
 			LoginCustomer loginCustomer = new LoginCustomer();
 			loginCustomer.checkLoginCustomer();
 		}
+
 
 	}
 
