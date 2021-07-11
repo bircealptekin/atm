@@ -1,5 +1,6 @@
 package screens;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import dao.CustomerDao;
@@ -14,18 +15,18 @@ public class CustomerScreen {
 		this.currentCustomer = currentCustomer;
 	}
 
-	public void CustomerDisplay() {
-		while (true) {
+	public void CustomerDisplay() throws SQLException {
+		int choice = 0;
+		while (choice != 5) {
 			Scanner input = new Scanner(System.in);
 			System.out.println("Please make a choice.");
 			System.out.println("1)Check Balance\n2)Deposit\n3)Withdrawal\n4)Transfer\n5)Exit");
-			int choice;
 			choice = input.nextInt();
 
 			switch (choice) {
 				case 1:
 					System.out.println("**********************************");
-					customerDao.list();
+					System.out.println(customerDao.getBalance(currentCustomer));
 					break;
 				case 2:
 					System.out.println("**********************************");
@@ -41,7 +42,7 @@ public class CustomerScreen {
 					break;
 				case 5:
 					System.out.println("Exiting...");
-					System.exit(0);
+					
 					break;
 
 				default:
