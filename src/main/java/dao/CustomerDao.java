@@ -72,16 +72,15 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 	@Override
 	public int getBalance(CustomerDto currentCustomer) throws SQLException {
 		//CustomerDto customerDto; //declaration of variable customerDto
-		int customerBalance;
+		int customerBalance = 0;
 		String sql = "SELECT balance FROM customers WHERE id = ?";
 		try {
 			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
-			preparedStatement.setInt(1, currentCustomer.setId(resultSet.getInt("id")));
+			preparedStatement.setInt(1, currentCustomer.getId());
 			this.resultSet = preparedStatement.executeQuery();
 			System.out.println("Your balance: ");
-			while(resultSet.next()) {
-				currentCustomer.setBalance(resultSet.getInt("balance"));
-				customerList.add(customerDto);
+			if(resultSet.next()) {
+				customerBalance = currentCustomer.getBalance();
 			}
 			return customerBalance;
 		} catch (Exception e) {
@@ -89,5 +88,6 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		}
 		return customerBalance;
 	}
+
 	
 }
