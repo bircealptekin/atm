@@ -4,6 +4,7 @@ import dao.BankDao;
 import dao.CustomerDao;
 import dto.BankDto;
 import dto.CustomerDto;
+import screens.CustomerScreen;
 import utils.DbConnection;
 
 import java.sql.Connection;
@@ -36,14 +37,15 @@ public class Test {
 		choice = input.nextInt();
 		if(choice == 1) {
 			LoginBank loginBank = new LoginBank();
-			loginBank.checkLoginBank();
+			currentBank = loginBank.checkLoginBank();
 
 		}
 		else if(choice ==2) {
 			LoginCustomer loginCustomer = new LoginCustomer();
-			currentCustomer = loginCustomer.checkLoginCustomer();;
+			currentCustomer = loginCustomer.checkLoginCustomer();
+			CustomerScreen customerScreen = new CustomerScreen();
+			customerScreen.CustomerDisplay();
 		}
-
 
 	}
 

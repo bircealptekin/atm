@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class CustomerScreen {
 	
-	public void loginSuccessCustomer() {
+	public void CustomerDisplay() {
 		while (true) {
 			Scanner input = new Scanner(System.in);
 			System.out.println("Please make a choice.");
