@@ -41,7 +41,7 @@ public class Test {
 		}
 		else if(choice ==2) {
 			LoginCustomer loginCustomer = new LoginCustomer();
-			loginCustomer.checkLoginCustomer();
+			currentCustomer = loginCustomer.checkLoginCustomer();;
 		}
 
 
