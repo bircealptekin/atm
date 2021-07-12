@@ -133,15 +133,18 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			System.out.println("Please enter the ID of the customer: ");
 			transferId = input.nextInt();
 			
-			String sql1 = "SELECT name, surname FROM customers WHERE id = ?";
+			String sql1 = "SELECT name, surname, balance FROM customers WHERE id = ?";
 			try {
+				CustomerDto transferCustomer = new CustomerDto();
 				PreparedStatement statement1 = DbConnection.getConnection().prepareStatement(sql1);
 				statement1.setInt(1, transferId);
 				this.resultSet = statement1.executeQuery();
 				if(resultSet.next()) {
-					transferName = resultSet.getString("name");
-					transferSurname = resultSet.getString("surname");
-					System.out.println("Transfer will be made to: " + transferName + " " + transferSurname);
+					transferCustomer.setId(transferId);
+					transferCustomer.setName(resultSet.getString("name"));
+					transferCustomer.setSurname(resultSet.getString("surname"));
+					transferCustomer.setBalance(resultSet.getInt("balance"));
+					System.out.println("Transfer will be made to: " + transferCustomer.getName() + " " + transferCustomer.getSurname());
 				}
 				else {
 					 System.out.println("No such ID. Please try again");
