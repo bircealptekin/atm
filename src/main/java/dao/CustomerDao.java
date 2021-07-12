@@ -154,14 +154,9 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 					System.out.println("Please enter the amount of money you want to transfer: ");
 					transferAmount = input.nextInt();
 					updateBalance(currentCustomer, getBalance(currentCustomer) - transferAmount);
-					String sql2 = "SELECT balance FROM customers WHERE id = ?";
-					PreparedStatement statement2 = DbConnection.getConnection().prepareStatement(sql2);
-					statement2.setInt(1, transferBank.getId());
-					this.resultSet = statement2.executeQuery();
 					
-					if(resultSet.next()) {
-						bankDao.updateBalance(transferBank, bankDao.getBalance(transferBank) + transferAmount);					
-					}
+					bankDao.updateBalance(transferBank, bankDao.getBalance(transferBank) + transferAmount);					
+				
 				}	
 				else {
 					System.out.println("Going back to main screen...");
@@ -200,14 +195,9 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 					System.out.println("Please enter the amount of money you want to transfer: ");
 					transferAmount = input.nextInt();
 					updateBalance(currentCustomer, getBalance(currentCustomer) - transferAmount);
-					String sql2 = "SELECT balance FROM customers WHERE id = ?";
-					PreparedStatement statement2 = DbConnection.getConnection().prepareStatement(sql2);
-					statement2.setInt(1, transferCustomer.getId());
-					this.resultSet = statement2.executeQuery();
 					
-					if(resultSet.next()) {
-						updateBalance(transferCustomer, getBalance(transferCustomer) + transferAmount);					
-					}
+					updateBalance(transferCustomer, getBalance(transferCustomer) + transferAmount);					
+					
 				}	
 				else {
 					System.out.println("Going back to main screen...");
