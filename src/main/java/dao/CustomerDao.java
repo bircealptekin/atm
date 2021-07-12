@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import dto.BankDto;
 import dto.CustomerDto;
 import utils.DbConnection;
 import utils.IDaoImplements;
@@ -122,11 +123,54 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 	}
 	
 	public void transfer(CustomerDto currentCustomer) throws SQLException {
-		int choice, proceed, transferId, transferAmount, transferCustomerBalance, transferCustomerNewBalance;
+		int choice, proceed, transferId, transferAmount;
 		System.out.println("Please make a choice:\n1. Transfer to Bank 2. Transfer to Customer");
 		choice = input.nextInt();
 		if(choice == 1) {
+			System.out.println("Please enter the ID of the bank: ");
+			transferId = input.nextInt();
 			
+			String sql1 = "SELECT bank_name, balance FROM bank WHERE id = ?";
+			try {
+				BankDto transferBank = new BankDto();
+				BankDao bankDao = new BankDao();
+				PreparedStatement statement1 = DbConnection.getConnection().prepareStatement(sql1);
+				statement1.setInt(1, transferId);
+				this.resultSet = statement1.executeQuery();
+				if(resultSet.next()) {
+					transferBank.setId(transferId);
+					transferBank.setBank_name(resultSet.getString("bank_name"));
+					transferBank.setBalance(resultSet.getInt("balance"));
+					System.out.println("Transfer will be made to: " + transferBank.getBank_name());
+				}
+				else {
+					 System.out.println("No such ID. Please try again");
+					 transfer(currentCustomer);
+				}
+				
+				System.out.println("Proceed?\n1. Yes 2. No");
+				proceed = input.nextInt();
+				if(proceed == 1) {
+					System.out.println("Please enter the amount of money you want to transfer: ");
+					transferAmount = input.nextInt();
+					updateBalance(currentCustomer, getBalance(currentCustomer) - transferAmount);
+					String sql2 = "SELECT balance FROM customers WHERE id = ?";
+					PreparedStatement statement2 = DbConnection.getConnection().prepareStatement(sql2);
+					statement2.setInt(1, transferBank.getId());
+					this.resultSet = statement2.executeQuery();
+					
+					if(resultSet.next()) {
+						bankDao.updateBalance(transferBank, bankDao.getBalance(transferBank) + transferAmount);					
+					}
+				}	
+				else {
+					System.out.println("Going back to main screen...");
+					
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} 
 		else if (choice == 2) {
 			System.out.println("Please enter the ID of the customer: ");
@@ -165,7 +209,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 						updateBalance(transferCustomer, getBalance(transferCustomer) + transferAmount);					
 					}
 				}	
-				else if (proceed == 2) {
+				else {
 					System.out.println("Going back to main screen...");
 					
 				}
@@ -173,7 +217,6 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
 			
 		}
 				

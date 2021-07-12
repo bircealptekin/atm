@@ -29,6 +29,22 @@ public class BankDao implements IDaoImplements<BankDto> {
 		// TODO Auto-generated method stub
 	}
 
+	public void updateBalance(BankDto currentBank, int newBankBalance) throws SQLException {
+		String sql = "UPDATE bank SET balance = ? WHERE id = ?";
+		int isBalanceUpdated = 0;
+		try {
+			PreparedStatement preparedStatement2 = DbConnection.getConnection().prepareStatement(sql);
+			preparedStatement2.setInt(1, newBankBalance);
+			preparedStatement2.setInt(2, currentBank.getId());
+			isBalanceUpdated = preparedStatement2.executeUpdate();
+			if(isBalanceUpdated > 0) {
+				System.out.println("Operation successful.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public boolean delete(BankDto bankDto) throws SQLException {
 		// TODO Auto-generated method stub
