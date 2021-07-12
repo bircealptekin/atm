@@ -122,8 +122,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 	}
 	
 	public void transfer(CustomerDto currentCustomer) throws SQLException {
-		int choice, proceed, transferId, transferAmount, currentCustomerBalance, transferCustomerBalance, transferCustomerNewBalance;
-		String transferName, transferSurname;
+		int choice, proceed, transferId, transferAmount, transferCustomerBalance, transferCustomerNewBalance;
 		System.out.println("Please make a choice:\n1. Transfer to Bank 2. Transfer to Customer");
 		choice = input.nextInt();
 		if(choice == 1) {
@@ -156,28 +155,14 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 				if(proceed == 1) {
 					System.out.println("Please enter the amount of money you want to transfer: ");
 					transferAmount = input.nextInt();
-					currentCustomerBalance = getBalance(currentCustomer) - transferAmount;
-					updateBalance(currentCustomer, currentCustomerBalance);
+					updateBalance(currentCustomer, getBalance(currentCustomer) - transferAmount);
 					String sql2 = "SELECT balance FROM customers WHERE id = ?";
 					PreparedStatement statement2 = DbConnection.getConnection().prepareStatement(sql2);
-					statement2.setInt(1, transferId);
+					statement2.setInt(1, transferCustomer.getId());
 					this.resultSet = statement2.executeQuery();
 					
 					if(resultSet.next()) {
-						int isBalanceUpdated = 0;
-						transferCustomerBalance = resultSet.getInt("balance");
-						transferCustomerNewBalance = transferCustomerBalance + transferAmount;
-						String sql3 = "UPDATE customers SET balance = ? WHERE id = ?";
-						PreparedStatement statement3 = DbConnection.getConnection().prepareStatement(sql3);
-						statement3.setInt(1, transferCustomerNewBalance);
-						statement3.setInt(2, transferId);
-						isBalanceUpdated = statement3.executeUpdate();
-						if(isBalanceUpdated > 0) {
-							System.out.println("Operation successful.");
-						} else {
-							System.out.println("Operation failed.");
-						}
-						
+						updateBalance(transferCustomer, getBalance(transferCustomer) + transferAmount);					
 					}
 				}	
 				else if (proceed == 2) {
