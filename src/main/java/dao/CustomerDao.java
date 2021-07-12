@@ -58,7 +58,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		withdrawAmount = input.nextInt();
 		while (withdrawAmount > getBalance(currentCustomer)) {
 			System.out.println("Not enough balance. Your balance is: " + getBalance(currentCustomer));
-			System.out.println("Pleas specify another amount: ");
+			System.out.println("Please specify another amount: ");
 			withdrawAmount = input.nextInt();
 		}
 		
@@ -121,7 +121,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		return customerBalance;
 	}
 	
-	public String transfer(CustomerDto currentCustomer) throws SQLException {
+	public void transfer(CustomerDto currentCustomer) throws SQLException {
 		int choice, proceed, transferId, transferAmount, currentCustomerBalance, transferCustomerBalance, transferCustomerNewBalance;
 		String transferName, transferSurname;
 		System.out.println("Please make a choice:\n1. Transfer to Bank 2. Transfer to Customer");
@@ -170,16 +170,15 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 						statement3.setInt(2, transferId);
 						isBalanceUpdated = statement3.executeUpdate();
 						if(isBalanceUpdated > 0) {
-							return "Operation successful.";
-							//System.out.println("Operation successful.");
+							System.out.println("Operation successful.");
 						} else {
-							return "Operation failed.";
+							System.out.println("Operation failed.");
 						}
 						
 					}
 				}	
 				else if (proceed == 2) {
-					return "Going back to main screen...";
+					System.out.println("Going back to main screen...");
 					
 				}
 				
@@ -189,9 +188,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			
 			
 		}
-		return "Transfer made.";
-		
-		
+				
 	}
 
 	
