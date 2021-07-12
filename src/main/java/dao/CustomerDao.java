@@ -63,7 +63,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		}
 		
 		newCustomerBalance = getBalance(currentCustomer) - withdrawAmount;
-		update(currentCustomer, newCustomerBalance);
+		updateBalance(currentCustomer, newCustomerBalance);
 		
 	}
 	
@@ -74,10 +74,10 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		depositAmount = input.nextInt();
 		
 		newCustomerBalance = getBalance(currentCustomer) + depositAmount;
-		update(currentCustomer, newCustomerBalance);
+		updateBalance(currentCustomer, newCustomerBalance);
 	}
 	
-	public void update(CustomerDto currentCustomer, int newCustomerBalance) throws SQLException {
+	public void updateBalance(CustomerDto currentCustomer, int newCustomerBalance) throws SQLException {
 		String sql = "UPDATE customers SET balance = ? WHERE id = ?";
 		int isBalanceUpdated = 0;
 		try {
@@ -119,6 +119,79 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			e.printStackTrace();
 		}
 		return customerBalance;
+	}
+	
+	public String transfer(CustomerDto currentCustomer) throws SQLException {
+		int choice, proceed, transferId, transferAmount, currentCustomerBalance, transferCustomerBalance, transferCustomerNewBalance;
+		String transferName, transferSurname;
+		System.out.println("Please make a choice:\n1. Transfer to Bank 2. Transfer to Customer");
+		choice = input.nextInt();
+		if(choice == 1) {
+			
+		} 
+		else if (choice == 2) {
+			System.out.println("Please enter the ID of the customer: ");
+			transferId = input.nextInt();
+			
+			String sql1 = "SELECT name, surname FROM customers WHERE id = ?";
+			try {
+				PreparedStatement statement1 = DbConnection.getConnection().prepareStatement(sql1);
+				statement1.setInt(1, transferId);
+				this.resultSet = statement1.executeQuery();
+				if(resultSet.next()) {
+					transferName = resultSet.getString("name");
+					transferSurname = resultSet.getString("surname");
+					System.out.println("Transfer will be made to: " + transferName + " " + transferSurname);
+				}
+				else {
+					 System.out.println("No such ID. Please try again");
+					 transfer(currentCustomer);
+				}
+				
+				System.out.println("Proceed?\n1. Yes 2. No");
+				proceed = input.nextInt();
+				if(proceed == 1) {
+					System.out.println("Please enter the amount of money you want to transfer: ");
+					transferAmount = input.nextInt();
+					currentCustomerBalance = getBalance(currentCustomer) - transferAmount;
+					updateBalance(currentCustomer, currentCustomerBalance);
+					String sql2 = "SELECT balance FROM customers WHERE id = ?";
+					PreparedStatement statement2 = DbConnection.getConnection().prepareStatement(sql2);
+					statement2.setInt(1, transferId);
+					this.resultSet = statement2.executeQuery();
+					
+					if(resultSet.next()) {
+						int isBalanceUpdated = 0;
+						transferCustomerBalance = resultSet.getInt("balance");
+						transferCustomerNewBalance = transferCustomerBalance + transferAmount;
+						String sql3 = "UPDATE customers SET balance = ? WHERE id = ?";
+						PreparedStatement statement3 = DbConnection.getConnection().prepareStatement(sql3);
+						statement3.setInt(1, transferCustomerNewBalance);
+						statement3.setInt(2, transferId);
+						isBalanceUpdated = statement3.executeUpdate();
+						if(isBalanceUpdated > 0) {
+							return "Operation successful.";
+							//System.out.println("Operation successful.");
+						} else {
+							return "Operation failed.";
+						}
+						
+					}
+				}	
+				else if (proceed == 2) {
+					return "Going back to main screen...";
+					
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+		return "Transfer made.";
+		
+		
 	}
 
 	
