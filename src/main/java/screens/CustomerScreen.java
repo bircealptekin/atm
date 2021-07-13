@@ -43,7 +43,6 @@ public class CustomerScreen {
 					break;
 				case 5:
 					System.out.println("Exiting...");
-					
 					break;
 
 				default:

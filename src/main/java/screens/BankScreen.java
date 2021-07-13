@@ -31,15 +31,15 @@ public class BankScreen {
 					break;
 				case 2:
 					System.out.println("**********************************");
-					
+					bankDao.deposit(currentBank);
 					break;
 				case 3:
 					System.out.println("**********************************");
-					
+					bankDao.withdraw(currentBank);
 					break;
 				case 4:
 					System.out.println("**********************************");
-					
+					bankDao.transfer(currentBank);
 					break;
 				case 5:
 					System.out.println("Exiting...");

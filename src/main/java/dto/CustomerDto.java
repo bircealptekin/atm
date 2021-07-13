@@ -7,6 +7,7 @@ public class CustomerDto {
 	private String name;
 	private String surname;
 	private String username;
+	private String email;
 	private String password;
 	private int balance;
 	
@@ -35,6 +36,12 @@ public class CustomerDto {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -54,21 +61,23 @@ public class CustomerDto {
 	}
 	
 	// constructor with parameter
-	public CustomerDto(int id, String name, String surname, String username, String password, int balance) {
+	public CustomerDto(int id, String name, String surname, String username, String email, String password, int balance) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.username = username;
+		this.email = email;
 		this.password = password;
 		this.balance = balance;
 	}
-
+	
 	// to string
 	@Override
 	public String toString() {
 		return "CustomerDto [id=" + id + ", name=" + name + ", surname=" + surname + ", username=" + username
-				+ ", password=" + password + ", balance=" + balance + "]";
+				+ ", email=" + email + ", password=" + password + ", balance=" + balance + "]\n";
 	}
+	
 	
 }
