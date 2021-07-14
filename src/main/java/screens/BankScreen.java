@@ -21,7 +21,7 @@ public class BankScreen {
 		while (choice != 6) {
 			Scanner input = new Scanner(System.in);
 			System.out.println("Please make a choice.");
-			System.out.println("1)Check Balance\n2)Deposit\n3)Withdrawal\n4)Transfer\n5)List customers\n6)Exit");
+			System.out.println("1)Check Balance\n2)Deposit\n3)Withdrawal\n4)Transfer\n5)List Customers\n6)Delete Customer\n7)Exit");
 			choice = input.nextInt();
 
 			switch (choice) {
@@ -46,6 +46,10 @@ public class BankScreen {
 					System.out.println(bankDao.listCustomers(currentBank));
 					break;
 				case 6:
+					System.out.println("**********************************");
+					bankDao.delete(currentBank);
+					break;
+				case 7:
 					System.out.println("Exiting...");
 					
 					break;

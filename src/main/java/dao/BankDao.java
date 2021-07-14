@@ -16,9 +16,8 @@ public class BankDao implements IDaoImplements<BankDto> {
 	Scanner input = new Scanner(System.in);
 	
 	@Override
-	public boolean create(BankDto bankDto) throws SQLException {
+	public void create(BankDto bankDto) throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -154,9 +153,49 @@ public class BankDao implements IDaoImplements<BankDto> {
 	}
 	
 	@Override
-	public boolean delete(BankDto bankDto) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public void delete(BankDto currentBank) throws SQLException {
+		int customerId, proceed, isDeleted = 0;
+		System.out.println("Please enter the ID of the customer you want to delete: ");
+		customerId = input.nextInt();
+		
+		String sql = "SELECT * FROM customers WHERE id  = ? and bank_id = ?";
+		try {
+			CustomerDto deleteCustomer = new CustomerDto();
+			PreparedStatement statement = DbConnection.getConnection().prepareStatement(sql);
+			statement.setInt(1, customerId);
+			statement.setInt(2, currentBank.getId());
+			this.resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				deleteCustomer.setId(customerId);
+				deleteCustomer.setName(resultSet.getString("name"));
+				deleteCustomer.setSurname(resultSet.getString("surname"));
+				System.out.println("Customer" + " " + deleteCustomer.getName() + " " + deleteCustomer.getSurname() + "will be deleted.");
+			}
+			else {
+				 System.out.println("No such ID. Please try again");
+				 transfer(currentBank);
+			}
+			System.out.println("Proceed?\n1. Yes 2. No");
+			proceed = input.nextInt();
+			if (proceed == 1) {
+				String sql2 = "DELETE FROM customers WHERE id = ?";
+				PreparedStatement statement2 = DbConnection.getConnection().prepareStatement(sql2);
+				statement2.setInt(1, customerId);
+				isDeleted = statement2.executeUpdate();
+				if(isDeleted > 0) {
+					System.out.println("Customer deleted.");
+				}
+				else {
+					System.out.println("Operation failed.");
+				}
+			}
+			else if (proceed == 2){
+				System.out.println("Going back to main screen...");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

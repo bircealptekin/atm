@@ -48,9 +48,8 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 
 
 	@Override
-	public boolean create(CustomerDto customerDto) throws SQLException {
+	public void create(CustomerDto customerDto) throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 
@@ -98,9 +97,8 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 
 
 	@Override
-	public boolean delete(CustomerDto customerDto) throws SQLException {
+	public void delete(CustomerDto customerDto) throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 
