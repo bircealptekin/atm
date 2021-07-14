@@ -4,6 +4,7 @@ public class CustomerDto {
 	
 	// declare the variables
 	private int id;
+	private int bank_id;
 	private String name;
 	private String surname;
 	private String username;
@@ -17,6 +18,12 @@ public class CustomerDto {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getBank_id() {
+		return bank_id;
+	}
+	public void setBank_id(int bank_id) {
+		this.bank_id = bank_id;
 	}
 	public String getName() {
 		return name;
@@ -61,9 +68,10 @@ public class CustomerDto {
 	}
 	
 	// constructor with parameter
-	public CustomerDto(int id, String name, String surname, String username, String email, String password, int balance) {
+	public CustomerDto(int id, int bank_id, String name, String surname, String username, String email, String password, int balance) {
 		super();
 		this.id = id;
+		this.bank_id = bank_id;
 		this.name = name;
 		this.surname = surname;
 		this.username = username;
@@ -75,9 +83,9 @@ public class CustomerDto {
 	// to string
 	@Override
 	public String toString() {
-		return "CustomerDto [id=" + id + ", name=" + name + ", surname=" + surname + ", username=" + username
-				+ ", email=" + email + ", password=" + password + ", balance=" + balance + "]\n";
-	}
-	
+		return "CustomerDto [id=" + id + ", bank_id=" + bank_id + ", name=" + name + ", surname=" + surname
+				+ ", username=" + username + ", email=" + email + ", password=" + password + ", balance=" + balance
+				+ "]\n";
+	}	
 	
 }

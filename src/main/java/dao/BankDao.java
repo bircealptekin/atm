@@ -184,6 +184,34 @@ public class BankDao implements IDaoImplements<BankDto> {
 		}
 		return bankList;
 	}
+	
+	public ArrayList<CustomerDto> listCustomers(BankDto currentBank) {
+		CustomerDto customerDto; //declaration of variable
+		ArrayList<CustomerDto> customerList = new ArrayList<CustomerDto>();
+		String sql = "SELECT * FROM customers where bank_id = ?";
+		try {
+			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
+			preparedStatement.setInt(1, currentBank.getId());
+			this.resultSet = preparedStatement.executeQuery();
+			System.out.println("Customers list: ");
+			while(resultSet.next()) {
+				customerDto = new CustomerDto();
+				customerDto.setId(resultSet.getInt("id"));
+				customerDto.setBank_id(resultSet.getInt("bank_id"));
+				customerDto.setName(resultSet.getString("name"));
+				customerDto.setSurname(resultSet.getString("surname"));
+				customerDto.setUsername(resultSet.getString("username"));
+				customerDto.setEmail(resultSet.getString("email"));
+				customerDto.setPassword(resultSet.getString("password"));
+				customerDto.setBalance(resultSet.getInt("balance"));
+				customerList.add(customerDto);
+			}
+			return customerList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return customerList;
+	}
 
 	@Override
 	public int getBalance(BankDto currentBank) throws SQLException {

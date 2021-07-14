@@ -20,7 +20,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 	
 	@Override
 	public ArrayList<CustomerDto> list() {
-		CustomerDto customerDto; //declaration of variable writerDto
+		CustomerDto customerDto; //declaration of variable
 		ArrayList<CustomerDto> customerList = new ArrayList<CustomerDto>();
 		String sql = "SELECT * FROM customers";
 		try {
@@ -30,6 +30,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			while(resultSet.next()) {
 				customerDto = new CustomerDto();
 				customerDto.setId(resultSet.getInt("id"));
+				customerDto.setBank_id(resultSet.getInt("bank_id"));
 				customerDto.setName(resultSet.getString("name"));
 				customerDto.setSurname(resultSet.getString("surname"));
 				customerDto.setUsername(resultSet.getString("username"));
