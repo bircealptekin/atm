@@ -24,6 +24,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		ArrayList<CustomerDto> customerList = new ArrayList<CustomerDto>();
 		String sql = "SELECT * FROM customers";
 		try {
+			DbConnection.getConnection().setAutoCommit(false);
 			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
 			this.resultSet = preparedStatement.executeQuery();
 			System.out.println("Customers list: ");
@@ -39,6 +40,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 				customerDto.setBalance(resultSet.getInt("balance"));
 				customerList.add(customerDto);
 			}
+			DbConnection.getConnection().setAutoCommit(true);
 			return customerList;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,6 +85,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		String sql = "UPDATE customers SET balance = ? WHERE id = ?";
 		int isBalanceUpdated = 0;
 		try {
+			DbConnection.getConnection().setAutoCommit(false);
 			PreparedStatement preparedStatement2 = DbConnection.getConnection().prepareStatement(sql);
 			preparedStatement2.setInt(1, newCustomerBalance);
 			preparedStatement2.setInt(2, currentCustomer.getId());
@@ -90,8 +93,10 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			if(isBalanceUpdated > 0) {
 				System.out.println("Operation successful.");
 			}
+			DbConnection.getConnection().setAutoCommit(true);
 		} catch (Exception e) {
-			e.printStackTrace();
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
 		}
 	}
 
@@ -107,6 +112,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		int customerBalance = 0;
 		String sql = "SELECT balance FROM customers WHERE id = ?";
 		try {
+			DbConnection.getConnection().setAutoCommit(false);
 			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
 			preparedStatement.setInt(1, currentCustomer.getId());
 			this.resultSet = preparedStatement.executeQuery();
@@ -115,9 +121,11 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 				customerBalance = resultSet.getInt("balance");
 				currentCustomer.setBalance(customerBalance);
 			}
+			DbConnection.getConnection().setAutoCommit(true);
 			return customerBalance;
 		} catch (Exception e) {
-			e.printStackTrace();
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
 		}
 		return customerBalance;
 	}
@@ -133,6 +141,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			
 			String sql1 = "SELECT bank_name, balance FROM bank WHERE id = ?";
 			try {
+				DbConnection.getConnection().setAutoCommit(false);
 				BankDto transferBank = new BankDto();
 				BankDao bankDao = new BankDao();
 				PreparedStatement statement1 = DbConnection.getConnection().prepareStatement(sql1);
@@ -164,8 +173,10 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 					
 				}
 				
+				DbConnection.getConnection().setAutoCommit(true);
 			} catch (Exception e) {
-				e.printStackTrace();
+				DbConnection.getConnection().rollback();
+				//e.printStackTrace();
 			}
 		} 
 		else if (choice == 2) {
@@ -174,6 +185,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			
 			String sql1 = "SELECT name, surname, balance FROM customers WHERE id = ?";
 			try {
+				DbConnection.getConnection().setAutoCommit(false);
 				CustomerDto transferCustomer = new CustomerDto();
 				PreparedStatement statement1 = DbConnection.getConnection().prepareStatement(sql1);
 				statement1.setInt(1, transferId);
@@ -205,8 +217,10 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 					
 				}
 				
+				DbConnection.getConnection().setAutoCommit(true);
 			} catch (Exception e) {
-				e.printStackTrace();
+				DbConnection.getConnection().rollback();
+				//e.printStackTrace();
 			}
 			
 		}

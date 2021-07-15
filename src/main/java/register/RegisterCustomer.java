@@ -1,6 +1,7 @@
 package register;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import dao.BankDao;
@@ -9,7 +10,7 @@ import utils.DbConnection;
 
 public class RegisterCustomer {
 
-	public void customerRegister() {
+	public void customerRegister() throws SQLException {
 		BankDao bankDao = new BankDao();
 		CustomerDto registerCustomer;
 		registerCustomer = new CustomerDto();
@@ -34,6 +35,7 @@ public class RegisterCustomer {
 		
 		String sql = "INSERT INTO customers(bank_id, name, surname, username, email, password, balance) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
+			DbConnection.getConnection().setAutoCommit(false);
 			PreparedStatement statement = DbConnection.getConnection().prepareStatement(sql);
 			statement.setInt(1, bank_id);
 			statement.setString(2, name);
@@ -49,8 +51,11 @@ public class RegisterCustomer {
 				System.out.println("Operation failed.");
 			}
 			
+			DbConnection.getConnection().setAutoCommit(true);
+			
 		} catch (Exception e) {
-			e.printStackTrace();
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
 		}
 	}
 	

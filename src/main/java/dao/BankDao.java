@@ -49,6 +49,7 @@ public class BankDao implements IDaoImplements<BankDto> {
 		String sql = "UPDATE bank SET balance = ? WHERE id = ?";
 		int isBalanceUpdated = 0;
 		try {
+			DbConnection.getConnection().setAutoCommit(false);
 			PreparedStatement preparedStatement2 = DbConnection.getConnection().prepareStatement(sql);
 			preparedStatement2.setInt(1, newBankBalance);
 			preparedStatement2.setInt(2, currentBank.getId());
@@ -56,8 +57,12 @@ public class BankDao implements IDaoImplements<BankDto> {
 			if(isBalanceUpdated > 0) {
 				System.out.println("Operation successful.");
 			}
+			
+			DbConnection.getConnection().setAutoCommit(true);
+			
 		} catch (Exception e) {
-			e.printStackTrace();
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -72,6 +77,7 @@ public class BankDao implements IDaoImplements<BankDto> {
 			
 			String sql1 = "SELECT bank_name, balance FROM bank WHERE id = ?";
 			try {
+				DbConnection.getConnection().setAutoCommit(false);
 				BankDto transferBank = new BankDto();
 				PreparedStatement statement1 = DbConnection.getConnection().prepareStatement(sql1);
 				statement1.setInt(1, transferId);
@@ -102,8 +108,11 @@ public class BankDao implements IDaoImplements<BankDto> {
 					
 				}
 				
+				DbConnection.getConnection().setAutoCommit(true);
+				
 			} catch (Exception e) {
-				e.printStackTrace();
+				DbConnection.getConnection().rollback();
+				//e.printStackTrace();
 			}
 		} 
 		else if (choice == 2) {
@@ -112,6 +121,7 @@ public class BankDao implements IDaoImplements<BankDto> {
 			
 			String sql1 = "SELECT name, surname, balance FROM customers WHERE id = ?";
 			try {
+				DbConnection.getConnection().setAutoCommit(false);
 				CustomerDto transferCustomer = new CustomerDto();
 				CustomerDao customerDao = new CustomerDao();
 				PreparedStatement statement1 = DbConnection.getConnection().prepareStatement(sql1);
@@ -144,8 +154,11 @@ public class BankDao implements IDaoImplements<BankDto> {
 					
 				}
 				
+				DbConnection.getConnection().setAutoCommit(true);
+				
 			} catch (Exception e) {
-				e.printStackTrace();
+				DbConnection.getConnection().rollback();
+				//e.printStackTrace();
 			}
 			
 		}
@@ -160,6 +173,7 @@ public class BankDao implements IDaoImplements<BankDto> {
 		
 		String sql = "SELECT * FROM customers WHERE id  = ? and bank_id = ?";
 		try {
+			DbConnection.getConnection().setAutoCommit(false);
 			CustomerDto deleteCustomer = new CustomerDto();
 			PreparedStatement statement = DbConnection.getConnection().prepareStatement(sql);
 			statement.setInt(1, customerId);
@@ -193,17 +207,21 @@ public class BankDao implements IDaoImplements<BankDto> {
 				System.out.println("Going back to main screen...");
 			}
 			
+			DbConnection.getConnection().setAutoCommit(true);
+			
 		} catch (Exception e) {
-			e.printStackTrace();
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
 		}
 	}
 
 	@Override
-	public ArrayList<BankDto> list() {
+	public ArrayList<BankDto> list() throws SQLException {
 		BankDto bankDto;
 		ArrayList<BankDto> bankList = new ArrayList<BankDto>();
 		String sql = "SELECT * FROM bank";
 		try {
+			DbConnection.getConnection().setAutoCommit(false);
 			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
 			this.resultSet = preparedStatement.executeQuery();
 			System.out.println("Banks list:");
@@ -217,18 +235,21 @@ public class BankDao implements IDaoImplements<BankDto> {
 				bankDto.setBalance(resultSet.getInt("balance"));
 				bankList.add(bankDto);
 			}
+			DbConnection.getConnection().setAutoCommit(true);
 			return bankList;
 		} catch (Exception e) {
-			e.printStackTrace();
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
 		}
 		return bankList;
 	}
 	
-	public ArrayList<CustomerDto> listCustomers(BankDto currentBank) {
+	public ArrayList<CustomerDto> listCustomers(BankDto currentBank) throws SQLException {
 		CustomerDto customerDto; //declaration of variable
 		ArrayList<CustomerDto> customerList = new ArrayList<CustomerDto>();
 		String sql = "SELECT * FROM customers where bank_id = ?";
 		try {
+			DbConnection.getConnection().setAutoCommit(false);
 			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
 			preparedStatement.setInt(1, currentBank.getId());
 			this.resultSet = preparedStatement.executeQuery();
@@ -245,9 +266,11 @@ public class BankDao implements IDaoImplements<BankDto> {
 				customerDto.setBalance(resultSet.getInt("balance"));
 				customerList.add(customerDto);
 			}
+			DbConnection.getConnection().setAutoCommit(true);
 			return customerList;
 		} catch (Exception e) {
-			e.printStackTrace();
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
 		}
 		return customerList;
 	}
@@ -257,6 +280,7 @@ public class BankDao implements IDaoImplements<BankDto> {
 		int bankBalance = 0;
 		String sql = "SELECT balance FROM bank WHERE id = ?";
 		try {
+			DbConnection.getConnection().setAutoCommit(false);
 			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
 			preparedStatement.setInt(1, currentBank.getId());
 			this.resultSet = preparedStatement.executeQuery();
@@ -265,18 +289,21 @@ public class BankDao implements IDaoImplements<BankDto> {
 				bankBalance = resultSet.getInt("balance");
 				currentBank.setBalance(bankBalance);
 			}
+			DbConnection.getConnection().setAutoCommit(true);
 			return bankBalance;
 		} catch (Exception e) {
-			e.printStackTrace();
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
 		}
 		return bankBalance;
 	}
 	
-	public void listForCustomer() {
+	public void listForCustomer() throws SQLException{
 		BankDto bankDto = new BankDto();
 		ArrayList<BankDto> bankList = new ArrayList<BankDto>();
 		String sql = "SELECT id, bank_name FROM bank";
 		try {
+			DbConnection.getConnection().setAutoCommit(false);
 			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
 			this.resultSet = preparedStatement.executeQuery();
 			System.out.println("Banks list:");
@@ -286,8 +313,10 @@ public class BankDao implements IDaoImplements<BankDto> {
 				bankDto.setBank_name(resultSet.getString("bank_name"));
 				System.out.println("Bank ID: " + bankDto.getId() + " Bank name: " + bankDto.getBank_name());
 			}
+			DbConnection.getConnection().setAutoCommit(true);
 		} catch (Exception e) {
-			e.printStackTrace();
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
 		}
 	}
 
