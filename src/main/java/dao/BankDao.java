@@ -169,11 +169,11 @@ public class BankDao implements IDaoImplements<BankDto> {
 				deleteCustomer.setId(customerId);
 				deleteCustomer.setName(resultSet.getString("name"));
 				deleteCustomer.setSurname(resultSet.getString("surname"));
-				System.out.println("Customer" + " " + deleteCustomer.getName() + " " + deleteCustomer.getSurname() + "will be deleted.");
+				System.out.println("Customer" + " " + deleteCustomer.getName() + " " + deleteCustomer.getSurname() + " will be deleted.");
 			}
 			else {
-				 System.out.println("No such ID. Please try again");
-				 transfer(currentBank);
+				 System.out.println("No such ID. Please try again.");
+				 delete(currentBank);
 			}
 			System.out.println("Proceed?\n1. Yes 2. No");
 			proceed = input.nextInt();
@@ -270,6 +270,25 @@ public class BankDao implements IDaoImplements<BankDto> {
 			e.printStackTrace();
 		}
 		return bankBalance;
+	}
+	
+	public void listForCustomer() {
+		BankDto bankDto = new BankDto();
+		ArrayList<BankDto> bankList = new ArrayList<BankDto>();
+		String sql = "SELECT id, bank_name FROM bank";
+		try {
+			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
+			this.resultSet = preparedStatement.executeQuery();
+			System.out.println("Banks list:");
+			while(resultSet.next()) {
+				bankDto = new BankDto();
+				bankDto.setId(resultSet.getInt("id"));
+				bankDto.setBank_name(resultSet.getString("bank_name"));
+				System.out.println("Bank ID: " + bankDto.getId() + " Bank name: " + bankDto.getBank_name());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
