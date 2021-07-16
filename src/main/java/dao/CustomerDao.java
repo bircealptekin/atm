@@ -226,7 +226,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		System.out.println("Please enter password to confirm: ");
 		password = input.nextLine();
 		
-		if(currentCustomer.getPassword() == password) {
+		if(currentCustomer.getPassword().equals(password)) {
 			System.out.println(currentCustomer.getName() + " " + currentCustomer.getSurname() + ", your account will be deleted.");
 			System.out.println("Proceed?\n1. Yes 2. No");
 			proceed = input.nextInt();
