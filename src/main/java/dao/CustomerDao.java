@@ -257,7 +257,7 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			
 		}
 		else {
-			System.out.println("Username or password incorrect.");
+			System.out.println("Password incorrect.");
 		}
 		
 	}
