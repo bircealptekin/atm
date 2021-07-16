@@ -19,42 +19,33 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 	Scanner input = new Scanner(System.in);
 	
 	@Override
-	public ArrayList<CustomerDto> list() {
-		CustomerDto customerDto; //declaration of variable
-		ArrayList<CustomerDto> customerList = new ArrayList<CustomerDto>();
-		String sql = "SELECT * FROM customers";
-		try {
-			DbConnection.getConnection().setAutoCommit(false);
-			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
-			this.resultSet = preparedStatement.executeQuery();
-			System.out.println("Customers list: ");
-			while(resultSet.next()) {
-				customerDto = new CustomerDto();
-				customerDto.setId(resultSet.getInt("id"));
-				customerDto.setBank_id(resultSet.getInt("bank_id"));
-				customerDto.setName(resultSet.getString("name"));
-				customerDto.setSurname(resultSet.getString("surname"));
-				customerDto.setUsername(resultSet.getString("username"));
-				customerDto.setEmail(resultSet.getString("email"));
-				customerDto.setPassword(resultSet.getString("password"));
-				customerDto.setBalance(resultSet.getInt("balance"));
-				customerList.add(customerDto);
-			}
-			DbConnection.getConnection().setAutoCommit(true);
-			return customerList;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return customerList;
-	}
-
-
-	@Override
 	public void create(CustomerDto customerDto) throws SQLException {
 		// TODO Auto-generated method stub
 	}
-
-
+	
+	@Override
+	public int getBalance(CustomerDto currentCustomer) throws SQLException {
+		int customerBalance = 0;
+		String sql = "SELECT balance FROM customers WHERE id = ?";
+		try {
+			DbConnection.getConnection().setAutoCommit(false);
+			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
+			preparedStatement.setInt(1, currentCustomer.getId());
+			this.resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				customerBalance = resultSet.getInt("balance");
+				currentCustomer.setBalance(customerBalance);
+			}
+			DbConnection.getConnection().setAutoCommit(true);
+			return customerBalance;
+		} catch (Exception e) {
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
+		}
+		return customerBalance;
+	}
+	
 	@Override
 	public void withdraw(CustomerDto currentCustomer) throws SQLException {
 		int withdrawAmount = 0, newCustomerBalance = 0;
@@ -98,36 +89,6 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			DbConnection.getConnection().rollback();
 			//e.printStackTrace();
 		}
-	}
-
-
-	@Override
-	public void delete(CustomerDto customerDto) throws SQLException {
-		// TODO Auto-generated method stub
-	}
-
-
-	@Override
-	public int getBalance(CustomerDto currentCustomer) throws SQLException {
-		int customerBalance = 0;
-		String sql = "SELECT balance FROM customers WHERE id = ?";
-		try {
-			DbConnection.getConnection().setAutoCommit(false);
-			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
-			preparedStatement.setInt(1, currentCustomer.getId());
-			this.resultSet = preparedStatement.executeQuery();
-			
-			if(resultSet.next()) {
-				customerBalance = resultSet.getInt("balance");
-				currentCustomer.setBalance(customerBalance);
-			}
-			DbConnection.getConnection().setAutoCommit(true);
-			return customerBalance;
-		} catch (Exception e) {
-			DbConnection.getConnection().rollback();
-			//e.printStackTrace();
-		}
-		return customerBalance;
 	}
 	
 	@Override
@@ -225,6 +186,80 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			
 		}
 				
+	}
+	
+	@Override
+	public ArrayList<CustomerDto> list() {
+		CustomerDto customerDto; //declaration of variable
+		ArrayList<CustomerDto> customerList = new ArrayList<CustomerDto>();
+		String sql = "SELECT * FROM customers";
+		try {
+			DbConnection.getConnection().setAutoCommit(false);
+			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
+			this.resultSet = preparedStatement.executeQuery();
+			System.out.println("Customers list: ");
+			while(resultSet.next()) {
+				customerDto = new CustomerDto();
+				customerDto.setId(resultSet.getInt("id"));
+				customerDto.setBank_id(resultSet.getInt("bank_id"));
+				customerDto.setName(resultSet.getString("name"));
+				customerDto.setSurname(resultSet.getString("surname"));
+				customerDto.setUsername(resultSet.getString("username"));
+				customerDto.setEmail(resultSet.getString("email"));
+				customerDto.setPassword(resultSet.getString("password"));
+				customerDto.setBalance(resultSet.getInt("balance"));
+				customerList.add(customerDto);
+			}
+			DbConnection.getConnection().setAutoCommit(true);
+			return customerList;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return customerList;
+	}
+
+
+	@Override
+	public void delete(CustomerDto currentCustomer) throws SQLException {
+		int proceed, isDeleted = 0;
+		String password;
+		System.out.println("Please enter password to confirm: ");
+		password = input.nextLine();
+		
+		if(currentCustomer.getPassword() == password) {
+			System.out.println(currentCustomer.getName() + " " + currentCustomer.getSurname() + ", your account will be deleted.");
+			System.out.println("Proceed?\n1. Yes 2. No");
+			proceed = input.nextInt();
+			if(proceed == 1) {
+				String sql = "DELETE FROM customers WHERE id = ?";
+				try {
+					DbConnection.getConnection().setAutoCommit(false);
+					PreparedStatement statement = DbConnection.getConnection().prepareStatement(sql);
+					statement.setInt(1, currentCustomer.getId());
+					isDeleted = statement.executeUpdate();
+					if (isDeleted > 0) {
+						System.out.println("Your account has been deleted.");
+					}
+					else {
+						System.out.println("Operation failed.");
+					}
+					DbConnection.getConnection().setAutoCommit(true);
+				}
+				catch (Exception e) {
+					DbConnection.getConnection().rollback();
+					//e.printStackTrace();
+				}
+				
+			}
+			else if(proceed == 2){
+				System.out.println("Going back to main screen...");
+			}
+			
+		}
+		else {
+			System.out.println("Username or password incorrect.");
+		}
+		
 	}
 
 	

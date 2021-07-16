@@ -1,4 +1,4 @@
-package login;
+package controller;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import dao.CustomerDao;
 import dto.CustomerDto;
-import screens.CustomerScreen;
 import utils.DbConnection;
 
 public class LoginCustomer {

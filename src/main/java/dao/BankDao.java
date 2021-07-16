@@ -19,6 +19,29 @@ public class BankDao implements IDaoImplements<BankDto> {
 	public void create(BankDto bankDto) throws SQLException {
 		// TODO Auto-generated method stub
 	}
+	
+	@Override
+	public int getBalance(BankDto currentBank) throws SQLException {
+		int bankBalance = 0;
+		String sql = "SELECT balance FROM bank WHERE id = ?";
+		try {
+			DbConnection.getConnection().setAutoCommit(false);
+			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
+			preparedStatement.setInt(1, currentBank.getId());
+			this.resultSet = preparedStatement.executeQuery();
+			System.out.println("Your balance: ");
+			if(resultSet.next()) {
+				bankBalance = resultSet.getInt("balance");
+				currentBank.setBalance(bankBalance);
+			}
+			DbConnection.getConnection().setAutoCommit(true);
+			return bankBalance;
+		} catch (Exception e) {
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
+		}
+		return bankBalance;
+	}
 
 	@Override
 	public void withdraw(BankDto currentBank) throws SQLException {
@@ -273,29 +296,6 @@ public class BankDao implements IDaoImplements<BankDto> {
 			//e.printStackTrace();
 		}
 		return customerList;
-	}
-
-	@Override
-	public int getBalance(BankDto currentBank) throws SQLException {
-		int bankBalance = 0;
-		String sql = "SELECT balance FROM bank WHERE id = ?";
-		try {
-			DbConnection.getConnection().setAutoCommit(false);
-			PreparedStatement preparedStatement = DbConnection.getConnection().prepareStatement(sql);
-			preparedStatement.setInt(1, currentBank.getId());
-			this.resultSet = preparedStatement.executeQuery();
-			System.out.println("Your balance: ");
-			if(resultSet.next()) {
-				bankBalance = resultSet.getInt("balance");
-				currentBank.setBalance(bankBalance);
-			}
-			DbConnection.getConnection().setAutoCommit(true);
-			return bankBalance;
-		} catch (Exception e) {
-			DbConnection.getConnection().rollback();
-			//e.printStackTrace();
-		}
-		return bankBalance;
 	}
 	
 	public void listForCustomer() throws SQLException{

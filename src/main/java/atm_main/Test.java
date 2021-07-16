@@ -4,17 +4,18 @@ import dao.BankDao;
 import dao.CustomerDao;
 import dto.BankDto;
 import dto.CustomerDto;
-import login.LoginBank;
-import login.LoginCustomer;
-import register.RegisterBank;
-import register.RegisterCustomer;
-import screens.BankScreen;
-import screens.CustomerScreen;
 import utils.DbConnection;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
+
+import controller.BankScreen;
+import controller.CustomerScreen;
+import controller.LoginBank;
+import controller.LoginCustomer;
+import controller.RegisterBank;
+import controller.RegisterCustomer;
 
 public class Test {
 
