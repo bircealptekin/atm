@@ -20,7 +20,7 @@ public class CustomerScreen {
 		while (choice != 5) {
 			Scanner input = new Scanner(System.in);
 			System.out.println("Please make a choice.");
-			System.out.println("1)Check Balance\n2)Deposit\n3)Withdrawal\n4)Transfer\n5)Delete Account\n6)Exit");
+			System.out.println("1)Check Balance\n2)Deposit\n3)Withdrawal\n4)Transfer\n5)Send Email\n6)Delete Account\n7)Exit");
 			choice = input.nextInt();
 
 			switch (choice) {
@@ -43,9 +43,13 @@ public class CustomerScreen {
 					break;
 				case 5:
 					System.out.println("**********************************");
-					customerDao.delete(currentCustomer);
+					
 					break;
 				case 6:
+					System.out.println("**********************************");
+					customerDao.delete(currentCustomer);
+					break;
+				case 7:
 					System.out.println("Exiting...");
 					break;
 				default:

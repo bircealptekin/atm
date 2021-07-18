@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import dto.BankDto;
 import dto.CustomerDto;
+import email.Email;
 import utils.DbConnection;
 import utils.IDaoImplements;
 
@@ -260,6 +261,21 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 			System.out.println("Password incorrect.");
 		}
 		
+	}
+	
+	public void email(CustomerDto currentCustomer) {
+		String sql = "SELECT email FROM customers WHERE id = ?";
+		try {
+			PreparedStatement statement = DbConnection.getConnection().prepareStatement(sql);
+			statement.setInt(1, currentCustomer.getId());
+			this.resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				Email email = new Email();
+				email.sendEmail(currentCustomer.getEmail());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	
