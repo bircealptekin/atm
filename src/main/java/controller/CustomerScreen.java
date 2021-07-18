@@ -43,7 +43,7 @@ public class CustomerScreen {
 					break;
 				case 5:
 					System.out.println("**********************************");
-					
+					customerDao.email(currentCustomer);
 					break;
 				case 6:
 					System.out.println("**********************************");

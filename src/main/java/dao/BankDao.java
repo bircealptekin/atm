@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import dto.BankDto;
 import dto.CustomerDto;
+import email.Email;
 import utils.DbConnection;
 import utils.IDaoImplements;
 
@@ -312,6 +313,24 @@ public class BankDao implements IDaoImplements<BankDto> {
 				bankDto.setId(resultSet.getInt("id"));
 				bankDto.setBank_name(resultSet.getString("bank_name"));
 				System.out.println("Bank ID: " + bankDto.getId() + " Bank name: " + bankDto.getBank_name());
+			}
+			DbConnection.getConnection().setAutoCommit(true);
+		} catch (Exception e) {
+			DbConnection.getConnection().rollback();
+			//e.printStackTrace();
+		}
+	}
+	
+	public void email(BankDto currentBank) throws SQLException {
+		String sql = "SELECT email FROM bank WHERE id = ?";
+		try {
+			DbConnection.getConnection().setAutoCommit(false);
+			PreparedStatement statement = DbConnection.getConnection().prepareStatement(sql);
+			statement.setInt(1, currentBank.getId());
+			this.resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				Email email = new Email();
+				email.sendEmail(currentBank.getEmail());
 			}
 			DbConnection.getConnection().setAutoCommit(true);
 		} catch (Exception e) {
