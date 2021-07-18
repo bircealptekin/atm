@@ -11,6 +11,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class Email {
+	// database'teki email adresleri gercek olmadigindan kod calisiyor mu diye test amacli bu sekilde yazdim
+	// gercek email adresleri olsaydi currentCustomer ya da currentBank'in email'ini database'ten alip bu metoda verecektim
 	public void sendEmail() {
 		String from, to, host;
 		Scanner input = new Scanner(System.in);
