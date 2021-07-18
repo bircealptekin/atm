@@ -5,11 +5,13 @@ import java.util.Scanner;
 
 import dao.BankDao;
 import dto.BankDto;
+import email.Email;
 
 public class BankScreen {
 	
 	BankDao bankDao = new BankDao();
 	BankDto currentBank;
+	Email email = new Email();
 	
 	public BankScreen(BankDto currentBank) {
 		super();
@@ -51,7 +53,7 @@ public class BankScreen {
 					break;
 				case 7:
 					System.out.println("**********************************");
-					bankDao.email(currentBank);
+					email.sendEmail();
 					break;
 				case 8:
 					System.out.println("Exiting...");

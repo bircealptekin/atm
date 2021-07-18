@@ -31,9 +31,11 @@ public class LoginCustomer {
             if(resultSet.next()) {
             	System.out.println("Login successful.");
             	currentCustomer.setId(resultSet.getInt("id"));
+            	currentCustomer.setBank_id(resultSet.getInt("bank_id"));
             	currentCustomer.setName(resultSet.getString("name"));
             	currentCustomer.setSurname(resultSet.getString("surname"));
             	currentCustomer.setUsername(resultSet.getString("username"));
+            	currentCustomer.setEmail(resultSet.getString("email"));
             	currentCustomer.setPassword(resultSet.getString("password"));
             	currentCustomer.setBalance(resultSet.getInt("balance"));
             }

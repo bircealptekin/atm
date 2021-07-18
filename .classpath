@@ -8,7 +8,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.25.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.25.jar" sourcepath="C:/Users/user/.m2/repository/mysql/mysql-connector-java/8.0.25/mysql-connector-java-8.0.25-sources.jar"/>
 	<classpathentry kind="lib" path="lib/javax.mail.jar"/>
 	<classpathentry kind="lib" path="lib/smtp-1.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/activation.jar"/>

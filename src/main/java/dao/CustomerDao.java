@@ -262,24 +262,6 @@ public class CustomerDao implements IDaoImplements<CustomerDto> {
 		}
 		
 	}
-	
-	public void email(CustomerDto currentCustomer) throws SQLException {
-		String sql = "SELECT email FROM customers WHERE id = ?";
-		try {
-			DbConnection.getConnection().setAutoCommit(false);
-			PreparedStatement statement = DbConnection.getConnection().prepareStatement(sql);
-			statement.setInt(1, currentCustomer.getId());
-			this.resultSet = statement.executeQuery();
-			while(resultSet.next()) {
-				Email email = new Email();
-				email.sendEmail(currentCustomer.getEmail());
-			}
-			DbConnection.getConnection().setAutoCommit(true);
-		} catch (Exception e) {
-			DbConnection.getConnection().rollback();
-			//e.printStackTrace();
-		}
-	}
 
 	
 }

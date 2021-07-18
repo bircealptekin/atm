@@ -4,28 +4,38 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class Email {
-	public void sendEmail(String sender) {
-		String recipient, host;
+	public void sendEmail() {
+		String from, to, host;
 		Scanner input = new Scanner(System.in);
+		System.out.println("Your email address: ");
+		from = input.nextLine();
+		final String username = from;
+		System.out.println("Password: ");
+		final String password = input.nextLine();
 		System.out.println("to: ");
-		recipient = input.nextLine();
-		host = "localhost";
+		to = input.nextLine();
+		host = "smtp.gmail.com";
 		
-		// getting system properties
-		Properties properties = System.getProperties();
-		
-		// setting up the mail server
-		properties.setProperty("mail.smtp.host", host);
+		Properties properties = new Properties();
+		properties.put("mail.smtp.auth", "true");
+		properties.put("mail.smtp.starttls.enable", "true");
+		properties.put("mail.smtp.host", host);
+		properties.put("mail.smtp.port", "587");
 		
 		// getting the default session object
 		Session session = Session.getDefaultInstance(properties);
+		new javax.mail.Authenticator() {
+	         protected PasswordAuthentication getPasswordAuthentication() {
+	            return new PasswordAuthentication(username, password);
+	         }
+	      };
 		
 		try {
 			String subject, body;
@@ -38,10 +48,10 @@ public class Email {
 			MimeMessage message = new MimeMessage(session);
 			
 			// adding senders email to from field
-			message.setFrom(new InternetAddress(sender));
+			message.setFrom(new InternetAddress(from));
 			
 			// adding recipient's email to from field
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			
 			// subject of the email
 	        message.setSubject(subject);
@@ -52,8 +62,8 @@ public class Email {
 	        Transport.send(message);
 	        System.out.println("Mail successfully sent");
 			
-		} catch (MessagingException mex) {
-			mex.printStackTrace();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

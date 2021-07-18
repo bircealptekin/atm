@@ -320,23 +320,5 @@ public class BankDao implements IDaoImplements<BankDto> {
 			//e.printStackTrace();
 		}
 	}
-	
-	public void email(BankDto currentBank) throws SQLException {
-		String sql = "SELECT email FROM bank WHERE id = ?";
-		try {
-			DbConnection.getConnection().setAutoCommit(false);
-			PreparedStatement statement = DbConnection.getConnection().prepareStatement(sql);
-			statement.setInt(1, currentBank.getId());
-			this.resultSet = statement.executeQuery();
-			while(resultSet.next()) {
-				Email email = new Email();
-				email.sendEmail(currentBank.getEmail());
-			}
-			DbConnection.getConnection().setAutoCommit(true);
-		} catch (Exception e) {
-			DbConnection.getConnection().rollback();
-			//e.printStackTrace();
-		}
-	}
 
 }

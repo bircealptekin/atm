@@ -5,10 +5,12 @@ import java.util.Scanner;
 
 import dao.CustomerDao;
 import dto.CustomerDto;
+import email.Email;
 
 public class CustomerScreen {
 	CustomerDao customerDao = new CustomerDao();
 	CustomerDto currentCustomer;
+	Email email = new Email();
 	
 	public CustomerScreen(CustomerDto currentCustomer) {
 		super();
@@ -43,7 +45,7 @@ public class CustomerScreen {
 					break;
 				case 5:
 					System.out.println("**********************************");
-					customerDao.email(currentCustomer);
+					email.sendEmail();
 					break;
 				case 6:
 					System.out.println("**********************************");
