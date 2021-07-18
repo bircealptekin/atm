@@ -30,12 +30,12 @@ public class Email {
 		properties.put("mail.smtp.port", "587");
 		
 		// getting the default session object
-		Session session = Session.getDefaultInstance(properties);
-		new javax.mail.Authenticator() {
-	         protected PasswordAuthentication getPasswordAuthentication() {
-	            return new PasswordAuthentication(username, password);
-	         }
-	      };
+		 Session session = Session.getInstance(properties,
+			      new javax.mail.Authenticator() {
+			         protected PasswordAuthentication getPasswordAuthentication() {
+			            return new PasswordAuthentication(username, password);
+			         }
+			      });
 		
 		try {
 			String subject, body;
@@ -51,7 +51,7 @@ public class Email {
 			message.setFrom(new InternetAddress(from));
 			
 			// adding recipient's email to from field
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 			
 			// subject of the email
 	        message.setSubject(subject);

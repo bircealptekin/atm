@@ -19,7 +19,7 @@ public class CustomerScreen {
 
 	public void CustomerDisplay() throws SQLException {
 		int choice = 0;
-		while (choice != 5) {
+		while (choice != 7) {
 			Scanner input = new Scanner(System.in);
 			System.out.println("Please make a choice.");
 			System.out.println("1)Check Balance\n2)Deposit\n3)Withdrawal\n4)Transfer\n5)Send Email\n6)Delete Account\n7)Exit");

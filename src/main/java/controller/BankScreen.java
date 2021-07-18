@@ -20,7 +20,7 @@ public class BankScreen {
 
 	public void BankDisplay() throws SQLException {
 		int choice = 0;
-		while (choice != 6) {
+		while (choice != 8) {
 			Scanner input = new Scanner(System.in);
 			System.out.println("Please make a choice.");
 			System.out.println("1)Check Balance\n2)Deposit\n3)Withdrawal\n4)Transfer\n5)List Customers\n6)Delete Customer\n7)Send Email\n8)Exit");
