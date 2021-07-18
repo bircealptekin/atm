@@ -51,7 +51,7 @@ public class BankScreen {
 					break;
 				case 7:
 					System.out.println("**********************************");
-					
+					bankDao.email(currentBank);
 					break;
 				case 8:
 					System.out.println("Exiting...");
