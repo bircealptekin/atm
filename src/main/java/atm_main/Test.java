@@ -1,12 +1,9 @@
 package atm_main;
 
-import dao.BankDao;
-import dao.CustomerDao;
 import dto.BankDto;
 import dto.CustomerDto;
 import utils.DbConnection;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -22,16 +19,9 @@ public class Test {
 	public static void main(String[] args) throws SQLException {
 		
 		DbConnection.getConnection();
-	
-		//CustomerDao customerDao = new CustomerDao();
-		//BankDao bankDao = new BankDao();
 		
 		CustomerDto currentCustomer;
 		BankDto currentBank;
-		
-		//System.out.println(customerDao.list());
-		
-		//System.out.println(bankDao.list());
 		
 		Scanner input = new Scanner(System.in);
 		int choice = 0;
